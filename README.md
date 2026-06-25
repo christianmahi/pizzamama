@@ -1,4 +1,4 @@
-# Pizzamama
+# Pizzamama projet personnel
 
 Projet web développé avec Python et Django pour présenter une pizzeria et afficher un menu de pizzas depuis une base de données SQLite.
 
