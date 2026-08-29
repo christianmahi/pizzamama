@@ -5,6 +5,8 @@ Configuration Django du projet Pizzamama.
 import os
 from pathlib import Path
 
+import dj_database_url
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-dev-key-for-local-use-only")
@@ -16,6 +18,15 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
 ]
+
+# En production sur Heroku, on autorise le domaine de l'app (fourni automatiquement).
+_heroku_app_name = os.environ.get("HEROKU_APP_NAME")
+if _heroku_app_name:
+    ALLOWED_HOSTS.append(f"{_heroku_app_name}.herokuapp.com")
+
+_extra_hosts = os.environ.get("DJANGO_ALLOWED_HOSTS", "")
+if _extra_hosts:
+    ALLOWED_HOSTS.extend(h.strip() for h in _extra_hosts.split(",") if h.strip())
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -30,6 +41,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -59,10 +71,10 @@ TEMPLATES = [
 WSGI_APPLICATION = "pizzamama.wsgi.application"
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -87,5 +99,10 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
