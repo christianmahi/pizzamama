@@ -1,61 +1,47 @@
-# Pizzamama projet personnel
+# Pizzamama
 
-Projet web développé avec Python et Django pour présenter une pizzeria et afficher un menu de pizzas depuis une base de données SQLite.
+Site web d'une pizzeria, développé avec Python et Django. Le menu est affiché dynamiquement à partir d'une base de données, et les pizzas se gèrent depuis l'administration Django.
+
+**Démo en ligne :** https://desirechristian.pythonanywhere.com
 
 ## Fonctionnalités
-
 - Page d'accueil
-- Page menu
-- Affichage dynamique des pizzas depuis la base de données
-- Gestion des pizzas depuis l'administration Django
-- Affichage du nom, des ingrédients, du prix et du statut végétarien
-- Déploiement en ligne avec PythonAnywhere
+- Page menu avec les pizzas affichées depuis la base de données
+- Pour chaque pizza : nom, ingrédients, prix et indication végétarienne
+- Ajout, modification et suppression des pizzas depuis l'administration Django
 
-## Technologies utilisées
-
+## Technologies
 - Python
-- Django
+- Django (modèles, vues, templates, administration)
 - SQLite
-- HTML
-- CSS
-- PythonAnywhere
+- HTML / CSS
+- Déploiement sur PythonAnywhere
 
 ## Lancer le projet en local
 
-Installer les dépendances :
+1. Installer les dépendances :
+   ```
+   pip install -r requirements.txt
+   ```
+2. Créer la base de données :
+   ```
+   python manage.py migrate
+   ```
+3. Charger les pizzas d'exemple :
+   ```
+   python manage.py loaddata pizzas
+   ```
+4. Lancer le serveur :
+   ```
+   python manage.py runserver
+   ```
+5. Ouvrir http://127.0.0.1:8000/
 
-```bash
-pip install -r requirements.txt
-```
-
-Appliquer les migrations :
-
-```bash
-python manage.py migrate
-```
-
-Charger les pizzas d'exemple :
-
-```bash
-python manage.py loaddata pizzas
-```
-
-Lancer le serveur :
-
-```bash
-python manage.py runserver
-```
-
-Puis ouvrir :
-
-```text
-http://127.0.0.1:8000/
-```
-
-## Démo en ligne
-
-https://desirechristian.pythonanywhere.com
+## Ce que j'ai appris
+- Créer un projet Django et organiser ses modèles, vues et templates
+- Afficher des données dynamiquement depuis une base
+- Utiliser l'administration Django pour gérer le contenu
+- Mettre un site en ligne
 
 ## Auteur
-
-Mahi-Mezack Desire Christian
+Désiré Mahi Mezack
